@@ -18,3 +18,4 @@ clean:
 	rm -f *.o
 	rm -f encoder
 	rm -f decoder
+	rm -f result.png
