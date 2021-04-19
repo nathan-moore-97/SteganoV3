@@ -36,3 +36,5 @@ someOtherfoler/
 *.rar
 *.tar
 *.zip
+
+.vs
