@@ -3,15 +3,15 @@ import styles from '../styles/Home.module.css'
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <div className="min-h-screen py-0 px-2 flex flex-col justify-center items-center">
       <Head>
-        <title>Create Next App</title>
+        <title>StegoV3</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main className="flex flex-1 flex-col justify-center items-center px-20">
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          StegoEncoder
         </h1>
 
         <p className={styles.description}>
