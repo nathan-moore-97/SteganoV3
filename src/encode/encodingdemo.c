@@ -33,9 +33,7 @@ uint8_t decode_result_from_container(uint8_t *container) {
         printf("0x%02x\t", secret); // isolated secret bytes
         bin(buffer);
     }
-
-
-
+    
     return buffer;
 }
 

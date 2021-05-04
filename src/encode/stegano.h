@@ -47,6 +47,3 @@ typedef struct
     Validates the input PNG by checking for the existance and correct formatting of the PNG magic number
 */
 bool is_valid_png(int image_fd);
-
-bool encode_secret_to_png(int image_fd, int secret_fd, int output_fd, int resolution);
-bool decode_secret_from_png(int image_fd, int output_fd);
