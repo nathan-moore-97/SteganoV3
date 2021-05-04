@@ -115,7 +115,7 @@ bool encode_secret_to_png(int image_fd, int secret_fd, int output_fd, int resolu
             uint8_t result_buffer[4];
             read(image_fd, container, 4);
             encode_byte_into_container(secret_buffer, container, result_buffer);
-            write(output_fd, result_buffer, 4);
+            // write(output_fd, result_buffer, 4);
         }
     }
 
