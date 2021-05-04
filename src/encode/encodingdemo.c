@@ -1,20 +1,49 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
+#include "stegano.h"
+
+void bin(unsigned n)
+{
+    printf("0x%02x\t", n);
+    unsigned i;
+    int counter = 0;
+    for (i = 1 << 7; i > 0; i = i / 2) {
+        (n & i) ? printf("1") : printf("0");
+        if(++counter % 4 == 0) {
+            printf(" ");
+        }
+    }
+    puts("");
+}
+
 
 uint8_t decode_result_from_container(uint8_t *container) {
+    puts("Decoding...");
+    printf("iter\tcount\tcon_byte\tsecret\tbuffer\tbuffer_bin\n");
+    uint8_t buffer = 0;
+    int shift_counter = 0;
 
-    return 0;
+    for (int i = 0; i < 4; i++) {
+        // isolate the two bytes we care about
+        uint8_t secret = container[i] & 0x3;
+        buffer <<= 2;
+        buffer |= secret;
+
+        printf("%d\t", i); // Iterations
+        printf("%d\t", shift_counter); // number of bits to shift by
+        printf("0x%02x\t\t", container[i]); // container byte (pre-decoded)
+        printf("0x%02x\t", secret); // isolated secret bytes
+        bin(buffer);
+    }
+
+
+
+    return buffer;
 }
 
 void encode_byte_into_container(uint8_t secret_byte, uint8_t *container, uint8_t *result) {
     // Control variable for how many spaces to shift the secret by
     // Gonna start with a resolution of 2. Rn idk how to parameterize it
     int shift_counter = 6;
-    // We also need a buffer variable for the value to be encoded to hang out in
-    // during the encoding progress. 
-    uint8_t buffer;
-
+    puts("Encoding...");
     printf("iter\tcount\tsecret\tcon_byte\tshift_sec\tto_be_enc\tbuf\tres\n");
     for(int i = 0; i < 4; i++, shift_counter -= 2) {
         // shift the secret down to 2 bits
@@ -34,30 +63,13 @@ void encode_byte_into_container(uint8_t secret_byte, uint8_t *container, uint8_t
 
         result[i] = resultBuffer;
     }
-}
-
-void bin(unsigned n)
-{
-    printf("0x%02x\t", n);
-    unsigned i;
-    int counter = 0;
-    for (i = 1 << 7; i > 0; i = i / 2) {
-        (n & i) ? printf("1") : printf("0");
-        if(++counter % 4 == 0) {
-            printf(" ");
-        }
-    }
     puts("");
 }
-
-
 
 int main() {
     // Lets simulate reading one byte at a time, and what we do with that byte. 
     // First we need a byte of encodable data...
     uint8_t secret = 0x7d;
-    // Now, with a resolution of 2...
-    int resolution = 2;
     // We will need resolution 8 / resolution bytes of container data to encode. 
     // Lets add them in sequence to make it really easy how to see the data changes
     uint8_t container[4] = {60, 61, 62, 63}; 
